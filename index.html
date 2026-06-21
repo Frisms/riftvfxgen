@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="styles/images/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RotN vfx.json Generator</title>
+  <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+
+  <div class="import-overlay" id="importOverlay" onclick="closeImportIfOutside(event)">
+    <div class="import-modal">
+      <h3>import vfx.json</h3>
+      <textarea class="import-textarea" id="importTextarea" placeholder="Paste the json content or open it via Open File"></textarea>
+      <div class="import-error" id="importError"></div>
+      <div class="import-actions">
+        <button class="import-file-btn" onclick="document.getElementById('importFileInput').click()">open file</button>
+        <input type="file" id="importFileInput" accept=".json" onchange="loadFile(event)" style="display:none">
+        <button class="btn btn-accent" onclick="doImport()">paste</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="layout">
+    <div class="left">
+      <div class="top-header">
+        <p class="help">
+          Helpful Steam Guides!
+          <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3487821958#7970565" target="_blank" class="guide-link">96LB's Full Spec of vfx.json</a>
+          <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3530551712" target="_blank" class="guide-link">HoneyFox's Character ID vfx</a>
+        </p>
+        <img src="styles/images/logo.png" alt="" class="logo">
+        <div></div>
+      </div>
+
+      <div class="section" style="width:fit-content;">
+        <div class="section-header">base character</div>
+        <div class="section-body">
+          <div class="field-row">
+            <div class="field-label">characterid</div>
+            <select id="charId">
+              <option value="">(none)</option>
+              <optgroup label="BASE GAME">
+                <option>Beastmaster</option>
+                <option>Coda</option>
+                <option>Dove</option>
+                <option>Harmonie</option>
+                <option>Heph</option>
+                <option>Matron</option>
+                <option>Merlin</option>
+                <option>NecrodancerBurger</option>
+                <option>NecrodancerCloak</option>
+                <option>Nocturna</option>
+                <option>Queen</option>
+                <option>Reaper</option>
+                <option>Shopkeeper</option>
+                <option>Suzu</option>
+              </optgroup>
+              <optgroup label="DLCs">
+                <option>Apricot</option>
+                <option>Banana</option>
+                <option>Banana02</option>
+                <option>Cherry</option>
+                <option>DurianD</option>
+                <option>DurianJ</option>
+                <option>Eggplant</option>
+                <option>Fig</option>
+                <option>Guava01</option>
+                <option>Guava02</option>
+                <option>Guava03</option>
+                <option>Guava04</option>
+                <option>Guava05</option>
+                <option>Kiwi</option>
+                <option>Mango01</option>
+                <option>Mango02</option>
+                <option>Mango03</option>
+                <option>Mango04</option>
+                <option>Mango05</option>
+                <option>NecrodancerCrypt</option>
+                <option>Orange</option>
+                <option>Pineapple</option>
+                <option>Raspberry</option>
+                <option>Strawberry</option>
+                <option>Vanilla01</option>
+                <option>Vanilla02</option>
+                <option>Vanilla03</option>
+                <option>Vanilla04</option>
+                <option>Vanilla05</option>
+                <option>Vanilla06</option>
+              </optgroup>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          background
+          <button class="rem-btn" onclick="resetSection('bg1'); resetSection('bg2')">Reset</button>
+        </div>
+        <div class="section-body">
+          <div class="grid2">
+            <div>
+              <div class="sub-label">background color 2</div>
+              <div id="bg2wrap"></div>
+            </div>
+            <div>
+              <div class="sub-label">background color 1</div>
+              <div id="bg1wrap"></div>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field-label">additive intensity</div>
+            <input type="number" id="bgAdd" step="0.1" min="0" max="5" placeholder="default" style="width:90px">
+          </div>
+          <div class="field-row">
+            <div class="field-label">gradient intensity</div>
+            <input type="number" id="bgGrad" step="0.1" min="0" max="5" placeholder="default" style="width:90px">
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          rift glow color
+          <button class="rem-btn" onclick="resetSection('rift')">Reset</button>
+        </div>
+        <div class="section-body">
+          <div id="riftWrap"></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          rift clouds color
+          <button class="rem-btn" onclick="resetSection('core1'); resetSection('core2'); resetSection('coreLife')">Reset</button>
+        </div>
+        <div class="section-body">
+          <div class="sub-label">corestartcolor1</div>
+          <div id="core1wrap"></div>
+          <div class="sub-label">corestartcolor2</div>
+          <div id="core2wrap"></div>
+          <div class="sub-label">corecoloroverlifetime</div>
+          <div id="coreLifeWrap"></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          speedlines color
+          <button class="rem-btn" onclick="resetSection('speedStart'); resetSection('speedLife')">Reset</button>
+        </div>
+        <div class="section-body">
+          <div class="sub-label">speedlinesstartcolor</div>
+          <div id="speedStartWrap"></div>
+          <div class="sub-label">speedlinescoloroverlifetime</div>
+          <div id="speedLifeWrap"></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          custom particles
+          <button class="rem-btn" onclick="resetSection('pc1'); resetSection('pc2'); resetSection('pcLife')">Reset</button>
+        </div>
+        <div class="section-body">
+          <div class="field-row">
+            <div class="field-label">file</div>
+            <input type="text" id="particlePath" placeholder="particles.png" style="flex:1;min-width:120px">
+          </div>
+          <div class="field-row">
+            <div class="field-label">columns(W)</div>
+            <input type="number" id="particleW" min="1" max="20" placeholder="2" style="width:65px">
+            <div class="field-label" style="min-width:60px">rows(h)</div>
+            <input type="number" id="particleH" min="1" max="20" placeholder="2" style="width:65px">
+          </div>
+          <div class="sub-label">customparticlecolor1</div>
+          <div id="pc1wrap"></div>
+          <div class="sub-label">customparticlecolor2</div>
+          <div id="pc2wrap"></div>
+          <div class="sub-label">customparticlecoloroverlifetime</div>
+          <div id="pcLifeWrap"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="right">
+      <div class="right-header">
+        <div class="right-title">vfx.json</div>
+        <button class="btn" onclick="openImport()">import json</button>
+        <button class="btn btn-accent" id="copyBtn" onclick="copyJson()">Copy</button>
+      </div>
+      <div class="json-out" id="out"></div>
+    </div>
+
+  </div>
+
+  <script src="scripts/main.js"></script>
+</body>
+</html>

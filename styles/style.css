@@ -1,0 +1,279 @@
+@import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@800&display=swap');
+/*i hate this so much*/
+  :root {
+  --surface:        #061016;   
+  --surface2:       #000000;   
+
+  --border:         #8d8897da;
+  --borderoutput:   #f1f1f1;
+
+  --text:           #eeeeee;   
+  --textvariable:   #76c8ff;   
+  --spacing: normal;
+  --radius: 2px;
+  --font:   'Oxanium', monospace;
+
+  --cyan:           #13bcff;
+  --red:            #ff2121;
+  --csborder:       #4f46b1;
+}
+/*most of the css is a bunch of references to the roots variables, dont question my design decisions please lol*/
+/*if something could be referenced and isnt, i just forgor/didnt pay attention*/
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0;}
+
+.help {
+  font-size: 20px; color: var(--text);
+  text-align: left;
+}
+
+.logo {
+  display: block;
+  width: 300px;
+  margin: 0 auto;
+}
+
+body {
+  overflow: hidden;
+  font-family: var(--font);
+  font-style: italic;
+  color: var(--text);
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("images/riftbackground.png");
+  background-size: cover;
+  background-position: center;
+}
+
+/*character id selection background and grouping*/
+select option {
+  background: var(--surface);
+  color: var(--text);
+}
+
+select optgroup {
+  background: var(--surface2);
+  color: var(--text);
+}
+
+/*im not doing previews for all that lol, to honeyfox's/lb's guide yall go r e a d*/
+.guide-link {
+  display: block;
+  margin-top: 8px;
+  font-size: 14px; color: var(--textvariable);
+  letter-spacing: var(--spacing);
+}
+
+.layout {
+  display: grid; grid-template-columns: 10fr 2.25fr;
+  height: 100vh;
+}
+
+/*left panel*/
+.left {
+  overflow-y: auto; padding: 2rem;
+  scrollbar-width: thick; scrollbar-color:var(--text) transparent;
+}
+
+/*right panel*/
+.right {
+  display: flex; flex-direction: column;
+  border-left: 2px solid var(--borderoutput);
+  background: var(--surface2); overflow: hidden;
+}
+.right-header {
+  padding: 0.6rem 1rem; border-bottom: 1px solid var(--borderoutput);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.right-title {
+  padding: 0.5rem 0.5rem;
+  font-size: 18px; color: var(--text);
+  letter-spacing: var(--spacing); text-transform: uppercase;
+}
+
+/*the output*/
+.json-out {
+  flex: 1; overflow-y: auto; padding: 1rem 1rem;
+  font-size: 20px; line-height: 1.05;
+  white-space: pre-wrap; word-break: break-word;
+  scrollbar-width: thin; scrollbar-color: var(--text) transparent;
+  background: url("images/pattern.png") repeat;
+  background-size: 250px 2048px;
+  background-position: center -333px;
+}
+
+/*the color highlights at the output side*/
+/*this is pretty i love it sobfire*/
+.json-out::-webkit-scrollbar { width: 4px; }
+.json-out::-webkit-scrollbar-thumb { background: var(--border); }
+.json-out .key  { color: var(--text); }
+.json-out .num  { color: var(--textvariable); }
+.json-out .str  { color: var(--cyan); }
+
+/*header buttons*/
+.btn {
+  padding: 3px 12px; border-radius: var(--radius);
+  border: 2px solid var(--border); background: transparent;
+  color: var(--text); font-family: var(--font); font-size: 14px;
+  font-weight: 800; letter-spacing: var(--spacing); text-transform: uppercase;
+  cursor: pointer;
+}
+.btn:hover { border-color: var(--text); color: var(--text); }
+.btn-accent { border-color: var(--text); color: var(--text); }
+.btn-accent:hover { color: var(--text); }
+.btn.copied { color: var(--cyan); border-color: var(--cyan); }
+
+/*sections*/
+.section {
+  margin-bottom: 3rem;
+  border: 6px solid var(--border); border-radius: var(--radius);
+  overflow: hidden;
+}
+.section-header {
+  padding: 0.4rem 0.75rem;
+  background: var(--surface2);
+  border-bottom: 2px solid var(--border);
+  font-size: 32px; letter-spacing: var(--spacing);
+  text-transform: uppercase; color: var(--text);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.section-body { padding: 1rem; background: var(--surface); }
+
+/*fields*/
+.field-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+.field-label { font-size: 20px; color: var(--text); min-width: 110px; letter-spacing: var(--spacing); text-transform: uppercase; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+.sub-label {
+  font-size: 16px; color: var(--text);
+  letter-spacing: var(--spacing); text-transform: uppercase;
+  margin-bottom: 4px; margin-top: 8px;
+}
+
+/*innputs*/
+select, input[type=text], input[type=number] {
+  padding: 4px; border-radius: var(--radius);
+  border: 1px solid var(--border); background: var(--surface2);
+  color: var(--text); font-family: var(--font); font-size: 13px;
+  outline: none;
+}
+select:focus, input[type=text]:focus, input[type=number]:focus {
+  border-color: var(--text);
+}
+select { cursor: pointer; }
+
+/*color picker*/
+input[type=color] {
+  width: 40px; height: 40px; border: 2px solid var(--border);
+  border-radius: 30px; background: transparent;
+  cursor: pointer; padding: 0;
+}
+input[type=color]::-webkit-color-swatch-wrapper { padding: 0; }
+input[type=color]::-webkit-color-swatch { border: none; border-radius: var(--radius); }
+input[type=color]:hover { border-color: var(--text); }
+
+/*range slider*/
+input[type=range] {
+  appearance: none; -webkit-appearance: none;
+  width: 90px; height: 2px; border-radius: 2px;
+  background: var(--border); outline: none;
+  cursor: pointer; border: none; padding: 0;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 12px; height: 12px;
+  border-radius: 50%; background: var(--text); cursor: pointer;
+}
+
+input[type=number].t-input { -moz-appearance: textfield; appearance: textfield; }
+input[type=number].t-input::-webkit-inner-spin-button,
+input[type=number].t-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+
+/*color group*/
+.color-group {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 4px 8px; margin-bottom: 4px;
+}
+.alpha-label { font-size: 18px; color: var(--text); }
+.alpha-val { font-size: 18px; color: var(--text); min-width: 28px; text-align: right; }
+
+/*color stops*/
+.grad-stop {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--surface2); border: 2px solid var(--csborder);
+  border-radius: var(--radius); padding: 4px 8px; margin-bottom: 4px;
+}
+.t-label { font-size: 10px; color: var(--text); }
+
+/*colorstop buttons*/
+.add-btn {
+  font-size: 14px; padding: 3px 10px; border-radius: var(--radius);
+  border: 1px groove var(--csborder); background: transparent;
+  color: var(--text); cursor: pointer; font-family: var(--font);
+  letter-spacing: var(--spacing); margin-top: 2px;
+}
+
+.rem-btn {
+  margin-left: auto; font-size: 14px; padding: 1px 6px;
+  border: 1px solid transparent;
+  background: transparent; color: var(--text); cursor: pointer;
+  font-family: var(--font);
+}
+.rem-btn:hover { color: var(--red); border-color: var(--red); }
+
+/*color gradient previews*/
+.grad-preview, .color-preview {
+  width: 100%; height: 24px; border-radius: var(--radius);
+  border: 1px solid var(--border); margin-bottom: 6px;
+  position: relative; overflow: hidden;
+  background: repeating-conic-gradient(#1a1a1a 0% 25%, #0d0d0d 0% 50%) 0 0 / 15px 15px; /*if someone reads this, i tried to make it like the 3 lanes ingame*/
+}
+.grad-preview-inner, .color-preview-inner { position: absolute; inset: 0; }
+
+/*t track/marker stuff*/
+.t-track-wrap { position: relative; width: 100%; height: 22px; margin-bottom: 20px; }
+.t-track {
+  position: absolute; top: 50%; left: 0; right: 0;
+  height: 2px; transform: translateY(-50%);
+  background: var(--surface2); border: 2px solid var(--csborder);
+}
+.t-marker {
+  position: absolute; top: 50%; width: 0; height: 0;
+  transform: translate(-50%, -50%);
+  cursor: ew-resize; user-select: none;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 18px solid rgb(0, 0, 0);
+}
+.t-marker-label {
+  position: absolute; top: 20px; left: 50%;
+  transform: translateX(-50%);
+  font-size: 13px; color: var(--text);
+  white-space: nowrap; pointer-events: none;
+}
+
+/*the import modal*/
+.import-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0, 0, 0, 0.329);
+  z-index: 100; align-items: center; justify-content: center;
+}
+.import-overlay.open { display: flex; }
+.import-modal {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 1.25rem; width: 500px; max-width: 95vw;
+}
+.import-modal h3 { font-size: 16px; font-weight: 800; letter-spacing: var(--spacing); text-transform: uppercase; }
+.import-textarea {
+  width: 100%; height: 160px; background: var(--surface2);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  color: var(--text); font-family: var(--font); font-size: 16px;
+  padding: 8px; resize: vertical; outline: none;
+}
+.import-textarea:focus { border-color: var(--text); }
+.import-error { font-size: 10px; color: var(--red); display: none; }
+.import-actions { display: flex; gap: 8px; justify-content: flex-end; align-items: center; }
+.import-file-btn {
+  padding: 4px 12px; border-radius: var(--radius);
+  border: 2px solid var(--border); background: transparent;
+  color: var(--text); font-family: var(--font); font-size: 14px;
+  font-weight: 800; letter-spacing: var(--spacing); text-transform: uppercase;
+  cursor: pointer; margin-right: auto;
+}
+.import-file-btn:hover { border-color: var(--text); color: var(--text); }
